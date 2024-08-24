@@ -75,7 +75,7 @@ frame5.grid_propagate(False)
 
 print_button=ttk.Button(frame5,text="Print",width=15)
 print_button.place(x=35,y=120)
-
+#
 #function to displa current date and time
 # Function to update date and time in the Entry widgets
 def update_datetime():
