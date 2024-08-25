@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from PIL import Image, ImageTk  # Importing from Pillow
+from PIL import Image, ImageTk  # Importing from Pillown
 from datetime import datetime
 
 custom_font = ("Calibri", 15, "bold", "underline")
@@ -36,11 +36,13 @@ def units_frame3(num1):
     return units_lable_frame3
 #function for parameters inside the frame 3
 def parameters_inside_label3(num2):
-    label_for_IU_parameters=ttk.Label(frame3, text=num2,font=custom_font_1,foreground="ghostwhite", background="dark blue")
+    label_for_IU_parameters=ttk.Label(frame3,text=num2,font=custom_font_1,foreground="ghostwhite", background="dark blue")
     return label_for_IU_parameters
-#function for Spinbox inside the frame 3
-def spinbox_inside_label3(num1):
-    spinbox_inside_farame3=ttk.Spinbox(frame3, from_=0, to=250,foreground="ghostwhite",background="blue",font=("calibre",10),width=10)
+#function for Spinbox inside the frame 3 
+spinboxes = {}
+def spinbox_inside_label3(Name):
+    spinbox_inside_farame3=ttk.Spinbox(frame3, from_=0, to=250, background="blue",foreground="black",font=("calibre",10),width=10)
+    spinboxes[Name]=spinbox_inside_farame3
     return spinbox_inside_farame3 
 
 Application = tk.Tk()
@@ -75,7 +77,7 @@ frame5.grid_propagate(False)
 
 print_button=ttk.Button(frame5,text="Print",width=15)
 print_button.place(x=35,y=120)
-#
+
 #function to displa current date and time
 # Function to update date and time in the Entry widgets
 def update_datetime():
@@ -120,7 +122,7 @@ label_for_shibauralogo.place(x=30,y=50)
 # Create a Combobox
 Power_pack_values = [11,22,30,37]
 IU_size_values = ["430IU","600IU","900IU","1400IU","2350IU"]
-Material_selection = ["PVC", "PP", "GPPS", "CPVC","RPVC"]
+Material_selection = ["PVC","PP","GPPS","Low_Density_PE","RPVC","High_Density_PE","PC","PET"]
 No_of_cylinders=["1","2"]
 combobox_for_Power_pack = ttk.Combobox(frame1, values=Power_pack_values,width=10)
 combobox_for_IU_size = ttk.Combobox(frame1, values=IU_size_values,width=10)
@@ -165,7 +167,12 @@ spinbox_for_extension_veloity=tk.Spinbox(frame2, from_=0, to=250, bg="blue", fg=
 spinbox_for_extension_veloity.place(x=200,y=260)
 spinbox_for_retraction_velocity=tk.Spinbox(frame2, from_=0, to=250, bg="blue", fg="white",font=("calibre",10),width=10)
 spinbox_for_retraction_velocity.place(x=200,y=290)
-
+spinbox_for_Melt_correction_factor=tk.Spinbox(frame2, from_=0, to=250, bg="blue", fg="white",font=("calibre",10),width=10)
+spinbox_for_Melt_correction_factor.place(x=200,y=320)
+spinbox_for_injection_time=tk.Spinbox(frame2, from_=0, to=250, bg="blue", fg="white",font=("calibre",10),width=10)
+spinbox_for_injection_time.place(x=200,y=350)
+spinbox_for_Dosing_time=tk.Spinbox(frame2, from_=0, to=250, bg="blue", fg="white",font=("calibre",10),width=10)
+spinbox_for_Dosing_time.place(x=200,y=380)
 
 # Add a label widget
 
@@ -175,8 +182,11 @@ units("mm\u00b2").place(x=300, y=110)
 units("mm").place(x=300, y=140)
 units("mm\u00b2").place(x=300, y=170)
 units("mm").place(x=300, y=230)
-units("mm\u00b2/s").place(x=300, y=260)
-units("mm\u00b2/s").place(x=300, y=290)
+units("mm/s").place(x=300, y=260)
+units("mm/s").place(x=300, y=290)
+units("gram/CC").place(x=300, y=320)
+units("sec").place(x=300, y=350)
+units("sec").place(x=300, y=380)
 
 Title_lable = ttk.Label(frame4, text="IU SPECIFICATION CALCULATION SHEET",font=custom_font, foreground="black",background="#7d7f9f")
 Title_lable.place(x=300,y=5)
@@ -217,6 +227,17 @@ cylinder_extension_velocity_lable = ttk.Label(frame2, text="EXTENSION VELOCITY",
 cylinder_extension_velocity_lable .place(x=20,y=260)
 cylinder_retraction_velocity_lable = ttk.Label(frame2, text="RETRACTION VELOCITY",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg"))
 cylinder_retraction_velocity_lable.place(x=20,y=290)
+Melt_correction_factor_lable = ttk.Label(frame2, text="MELT CORRECTION FACTOR",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg"))
+Melt_correction_factor_lable.place(x=20,y=320)
+Injection_time_lable = ttk.Label(frame2, text="INJECTION TIME",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg"))
+Injection_time_lable.place(x=20,y=350)
+Dosing_time_lable = ttk.Label(frame2, text="DOSING TIME",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg"))
+Dosing_time_lable.place(x=20,y=380)
+
+
+
+
+
 #label inside frame 3
 parameters_inside_label3("DOSING FLOW RATE").place(x=10, y=20)
 parameters_inside_label3("INJECTION FLOW RATE").place(x=10, y=50)
@@ -232,17 +253,17 @@ parameters_inside_label3("CYLINDER HEAD VOLUME").place(x=10, y=320)
 parameters_inside_label3("INJECTION POWER").place(x=10, y=350)
 parameters_inside_label3("OVER LOAD FACTOR").place(x=10, y=380)
 #spinbox inside frame 3
-spinbox_inside_label3("spinbox for dosign flow rate ").place(x=200, y=20)
-spinbox_inside_label3("spinbox for injection flow rate ").place(x=200, y=50)
-spinbox_inside_label3("spinbox for suckback flow rate ").place(x=200, y=80)
-spinbox_inside_label3("spinbox for injection velocity ").place(x=200, y=110)
-spinbox_inside_label3("spinbox for suck back velocity").place(x=200, y=140)
+spinbox_inside_label3("spinbox_for_dosign_flow_rate").place(x=200, y=20)
+spinbox_inside_label3("spinbox_for_injection_flow_rate").place(x=200, y=50)
+spinbox_inside_label3("spinbox_for_suckback_flow_rate").place(x=200, y=80)
+spinbox_inside_label3("spinbox_for_injection_velocity").place(x=200, y=110)
+spinbox_inside_label3("spinbox_for_suck_back_velocity").place(x=200, y=140)
 spinbox_inside_label3("spinbox for screw speed").place(x=200, y=170)
-spinbox_inside_label3("spinbox for injection rate").place(x=200, y=200)
+spinbox_inside_label3("spinbox_for_injection_rate").place(x=200, y=200)
 spinbox_inside_label3("spinbox for plasticizing rate ").place(x=200, y=230)
-spinbox_inside_label3("spinbox for shot weight").place(x=200, y=260)
-spinbox_inside_label3("spinbox for screw projected area").place(x=200, y=290)
-spinbox_inside_label3("spinbox for cylinder head volume").place(x=200, y=320)
+spinbox_inside_label3("spinbox_for_shot_weight").place(x=200, y=260)
+spinbox_inside_label3("spinbox_for_screw_projeced_area").place(x=200, y=290)
+spinbox_inside_label3("spinbox_for_cylinder_head_volume").place(x=200, y=320)
 spinbox_inside_label3("spinbox for injection power").place(x=200, y=350)
 spinbox_inside_label3("spinbox for overload factor").place(x=200, y=380)
 #units inside frame 3
@@ -286,7 +307,7 @@ def IU_selection (event):
     if Replaced_IU_size == 600 :
         Cylinder_Cap_Diameter = 115
         Cylinder_Rod_Diameter = 55
-        Cylinder_Stroke_length = 1250
+        Cylinder_Stroke_length = 125
     elif Replaced_IU_size == 900:
         Cylinder_Cap_Diameter = 130  
         Cylinder_Rod_Diameter = 60
@@ -313,12 +334,37 @@ def IU_selection (event):
     combobox_for_IU_size.config(style="TCombobox2.TCombobox")
     IU_SIZE_lable.config(text=f"{IU_size} IU is selected") 
 combobox_for_IU_size.bind("<<ComboboxSelected>>",IU_selection)
+# event calling function for melt correction factor
+def Meltcorretion ():
+    Material = combobox_for_Materialselection.get()
+    if Material == "PP":
+        Density = 0.89
+    elif Material == "GPPS":
+        Density = 1.04
+    elif Material == "Low_Density_PE":
+        Density = 0.91
+    elif Material == "High_Density_PE":
+        Density = 0.94
+    elif Material == "PVC":
+        Density = 1.16
+    elif Material == "PC":
+        Density = 1.2
+    elif Material == "PET":
+        Density = 1.35
+    else:
+        Density = 0  # Default if no match is found
+    spinbox_for_Melt_correction_factor.delete(0, tk.END)
+    spinbox_for_Melt_correction_factor.insert(0, Density)
+    style.configure("TCombobox2.TCombobox", fieldbackground="magenta", background="magenta")
+    combobox_for_Materialselection.config(style="TCombobox2.TCombobox")
+combobox_for_Materialselection.bind("<<ComboboxSelected>>", lambda event: Meltcorretion())
 import math 
 def Cylinder_parameters():
     Cylinder_Cap_Diameter=int(spinbox_for_capdiameter.get())
     Cylinder_Rod_Diameter=int(spinbox_for_roddiameter.get())
-    Cylinder_cap_side_area = (math.pi/4*Cylinder_Cap_Diameter**2)
-    Cylinder_rod_side_area = (math.pi/4*(Cylinder_Cap_Diameter-Cylinder_Rod_Diameter)**2)
+    no_of_cylinders=int(combobox_for_no_of_Cylinders.get())
+    Cylinder_cap_side_area = (math.pi/4*Cylinder_Cap_Diameter**2)*no_of_cylinders
+    Cylinder_rod_side_area = (math.pi/4*(Cylinder_Cap_Diameter-Cylinder_Rod_Diameter)**2)*no_of_cylinders
     spinbox_for_capside_area.delete(0,tk.END)
     spinbox_for_capside_area.insert(0,round(Cylinder_cap_side_area,2))
     spinbox_for_rodside_area.delete(0,tk.END)
@@ -336,6 +382,50 @@ def Cylinder_parameters():
     spinbox_for_extension_veloity.insert(0,round(Cylinder_extension_velocity,2))
     spinbox_for_retraction_velocity.delete(0,tk.END)
     spinbox_for_retraction_velocity.insert(0,round(Cylinder_retraction_velocity,2))
+    Dosing_flow_percentage=float(spinboxes["spinbox_for_dosign_flow_rate"].get())/100
+    Flow_rate = int(spinbox_for_ratedflow.get())
+    Dosing_flow_rate=Dosing_flow_percentage*Flow_rate
+    hydromotor_cc=int(spinbox_for_hydromotorCC.get())
+    screw_speed=(Dosing_flow_rate/hydromotor_cc)*1000
+    spinboxes["spinbox for screw speed"].delete(0,tk.END)
+    spinboxes["spinbox for screw speed"].insert(0,round(screw_speed,2))
+    Suckback_flow_percentage=float(spinboxes["spinbox_for_suckback_flow_rate"].get())/100
+    Flow_rate = int(spinbox_for_ratedflow.get())
+    Suckback_flow_rate=Suckback_flow_percentage*Flow_rate
+    Suckback_flow_rate_mm_s=(Suckback_flow_rate*10**6)/60
+    Suck_back_velocity=(Suckback_flow_rate_mm_s/Cylinder_cap_side_area)
+    spinboxes["spinbox_for_suck_back_velocity"].delete(0,tk.END)
+    spinboxes["spinbox_for_suck_back_velocity"].insert(0,round(Suck_back_velocity,2)) 
+    inject_flow_rate_percentage=float(spinboxes["spinbox_for_injection_flow_rate"].get())/100
+    Injection_flow_rate=inject_flow_rate_percentage*Flow_rate
+    Injection_flow_rate_in_mm_s=(Injection_flow_rate*10**6)/60  
+    Injection_velocity=Injection_flow_rate_in_mm_s/Cylinder_rod_side_area
+    spinboxes["spinbox_for_injection_velocity"].delete(0,tk.END)
+    spinboxes["spinbox_for_injection_velocity"].insert(0,round(Injection_velocity,2))
+    screw_diameter=float(spinbox_for_screwdiameter.get())
+    screw_projected_area=math.pi/4*screw_diameter**2
+    spinboxes["spinbox_for_screw_projeced_area"].delete(0,tk.END)
+    spinboxes["spinbox_for_screw_projeced_area"].insert(0,round(screw_projected_area,2))
+    cylinder_stroke_length=float(spinbox_for_suckbackstroke.get())
+    cylinder_head_volume=screw_projected_area*cylinder_stroke_length
+    spinboxes["spinbox_for_cylinder_head_volume"].delete(0,tk.END)
+    spinboxes["spinbox_for_cylinder_head_volume"].insert(0,round(cylinder_head_volume,2))
+    injection_rate=screw_projected_area*Injection_velocity/1000
+    spinboxes["spinbox_for_injection_rate"].delete(0,tk.END)
+    spinboxes["spinbox_for_injection_rate"].insert(0,round(injection_rate,2))
+    Density=float(spinbox_for_Melt_correction_factor.get())
+    shot_weight=Density*cylinder_head_volume/1000
+    spinboxes["spinbox_for_shot_weight"].delete(0,tk.END)
+    spinboxes["spinbox_for_shot_weight"].insert(0,round(shot_weight,2))
+    injection_time=cylinder_stroke_length/Injection_velocity
+    spinbox_for_injection_time.delete(0,tk.END)
+    spinbox_for_injection_time.insert(0,round(injection_time,2))
+
+
+
+
+    
+    
 
 
 
