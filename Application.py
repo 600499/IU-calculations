@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk  # Importing from Pillown
 from datetime import datetime
-
+import os
 custom_font = ("Calibri", 15, "bold", "underline")
 custom_font_1 = ("Calibri", 11, "bold")
 custom_font_2 = ("Calibri", 13, "bold", "underline")
@@ -103,8 +103,8 @@ Application.rowconfigure(0, weight=0 )
 Application.rowconfigure(1, weight=0)
 Application.rowconfigure(2, weight=0)
 Application.rowconfigure(3, weight=0)
-# Load the shibaura machine image using PIL
-image_path = "D:\Python programming\IU-calculations\shibaura_new.png" 
+# Load the shibaura machine image using PIL 
+image_path = os.path.join(os.path.dirname(__file__), 'shibaura_new.png')
 Shibaura_logo = Image.open(image_path)
 Shibaura_logo = Shibaura_logo.resize((190, 70), Image.LANCZOS)  # Resize the image to 200x150 pixels
 photo = ImageTk.PhotoImage(Shibaura_logo)
