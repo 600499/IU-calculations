@@ -24,6 +24,10 @@ def units(num1):
 def units_frame3(num1):
     units_lable_frame3=ttk.Label(frame3, text=num1,font=custom_font_1,foreground="ghostwhite", background="dark blue")
     return units_lable_frame3
+# function for parameter inside frame2
+def parameters_inside_frame2(num1):
+    label_for_Cylinder_parameters=ttk.Label(frame2,text=num1,font=custom_font_1,foreground="ghostwhite", background="dark blue")
+    return label_for_Cylinder_parameters
 #function for parameters inside the frame 3
 def parameters_inside_frame3(num2):
     label_for_IU_parameters=ttk.Label(frame3,text=num2,font=custom_font_1,foreground="ghostwhite", background="dark blue")
@@ -186,33 +190,19 @@ Actuator_parameters_label.place(x=90,y=250)
 IU_parameters_label = ttk.Label(Application, text="IU PARAMETERS",font=custom_font_2, foreground="Magenta", background=Application.cget("bg") )
 IU_parameters_label.place(x=540,y=250) 
 
-no_of_cylinders_lable = ttk.Label(frame2, text="NO OF CYLINDERS",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg") )
-no_of_cylinders_lable.place(x=20,y=20)
-Rated_flow_lable = ttk.Label(frame2, text="RATED FLOW",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg") )
-Rated_flow_lable.place(x=20,y=50)
-Cap_dia_lable = ttk.Label(frame2, text="CAP SIDE DIAMETER",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg") )
-Cap_dia_lable.place(x=20,y=80)
-Cap_side_area_lable = ttk.Label(frame2, text="CAP SIDE AREA",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg") )
-Cap_side_area_lable.place(x=20,y=110)
-Rod_Diameter_lable = ttk.Label(frame2, text="ROD SIDE DIAMETER",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg") )
-Rod_Diameter_lable.place(x=20,y=140)
-Rod_side_area_lable = ttk.Label(frame2, text="ROD SIDE AREA",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg") )
-Rod_side_area_lable.place(x=20,y=170)
-Area_ratio_lable = ttk.Label(frame2, text="AREA RATIO",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg"))
-Area_ratio_lable.place(x=20,y=200)
-Suck_backstroke_lable = ttk.Label(frame2, text="SUCKBACK STROKE",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg"))
-Suck_backstroke_lable.place(x=20,y=230)
-cylinder_extension_velocity_lable = ttk.Label(frame2, text="EXTENSION VELOCITY",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg"))
-cylinder_extension_velocity_lable .place(x=20,y=260)
-cylinder_retraction_velocity_lable = ttk.Label(frame2, text="RETRACTION VELOCITY",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg"))
-cylinder_retraction_velocity_lable.place(x=20,y=290)
-Melt_correction_factor_lable = ttk.Label(frame2, text="MELT CORRECTION FACTOR",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg"))
-Melt_correction_factor_lable.place(x=20,y=320)
-Injection_time_lable = ttk.Label(frame2, text="INJECTION TIME",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg"))
-Injection_time_lable.place(x=20,y=350)
-Dosing_time_lable = ttk.Label(frame2, text="DOSING TIME",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg"))
-Dosing_time_lable.place(x=20,y=380)
-
+parameters_inside_frame2("NO OF CYLINDERS").place(x=20,y=20)
+parameters_inside_frame2("RATED FLOW").place(x=20,y=50)
+parameters_inside_frame2("CAP SIDE DIAMETER").place(x=20,y=80)
+parameters_inside_frame2("CAP SIDE AREA").place(x=20,y=110)
+parameters_inside_frame2("ROD SIDE DIAMETER").place(x=20,y=140)
+parameters_inside_frame2("ROD SIDE AREA").place(x=20,y=170)
+parameters_inside_frame2("AREA RATIO").place(x=20,y=200)
+parameters_inside_frame2("SUCKBACK STROKE").place(x=20,y=230)
+parameters_inside_frame2("EXTENSION VELOCITY").place(x=20,y=260)
+parameters_inside_frame2("RETRACTION VELOCITY").place(x=20,y=290)
+parameters_inside_frame2("MELT CORRECTION FACTOR").place(x=20,y=320)
+parameters_inside_frame2("INJECTION TIME").place(x=20,y=350)
+parameters_inside_frame2("DOSING TIME").place(x=20,y=380)
 #label inside frame 3
 parameters_inside_frame3("DOSING FLOW RATE").place(x=10, y=20)
 parameters_inside_frame3("INJECTION FLOW RATE").place(x=10, y=50)
