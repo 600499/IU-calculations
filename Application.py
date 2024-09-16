@@ -38,29 +38,40 @@ def spinbox_inside_frame3(Name):
     spinbox_inside_frame3=tk.Spinbox(frame3, from_=0, to=250, background="blue", foreground="white",font=("calibre",10),width=10)
     spinboxes[Name]=spinbox_inside_frame3
     return spinbox_inside_frame3 
+#function for Spinbox inside the frame 1
+spinboxes = {}
+def spinbox_inside_frame1(Name):
+    spinbox_inside_frame1=tk.Spinbox(frame1, from_=0, to=250, background="blue", foreground="white",font=("calibre",10),width=10)
+    spinboxes[Name]=spinbox_inside_frame1
+    return spinbox_inside_frame1
 spinboxes = {}
 def spinbox_inside_frame2 (Name):
     spinbox_inside_frame2=tk.Spinbox(frame2, from_=0, to=250, background="blue", foreground="white",font=("callibre", 10), width=10)
     spinboxes[Name]=spinbox_inside_frame2
     return spinbox_inside_frame2
+label_frame1={}
+def Parameters_inside_frame1(Name):
+    label_inside_frame1=tk.Label(frame1,text=Name,font=custom_font_1,foreground="ghostwhite", background="dark blue")
+    label_frame1[Name]=label_inside_frame1
+    return label_inside_frame1
 
 Application = tk.Tk()
 Application.title("IU specification calculation")
 Application.geometry("1000x800+400+100")
 Application.configure(background="Dark blue")
 # Frame for input 
-frame1 = tk.Frame(Application, highlightbackground="white", highlightthickness=1,background= "dark blue",width=960, height=100)
+frame1 = tk.Frame(Application, highlightbackground="white", highlightthickness=1,background= "dark blue",width=960, height=130)
 frame1.grid(row=2, column=0, padx=20, pady=0, columnspan=3)
 # Prevent the frame from resizing to fit its children
 frame1.grid_propagate(False)
 # Frame for cylinder calculations
 frame2 = tk.Frame(Application, highlightbackground="white", highlightthickness=1,background= "dark blue",width=380, height=440)
-frame2.place(x=20,y=275)
+frame2.place(x=20,y=305)
 # Prevent the frame from resizing to fit its children
 frame2.grid_propagate(False)
 # Frame for injection unit parameters
 frame3 = tk.Frame(Application, highlightbackground="white", highlightthickness=1,background= "dark blue",width=380, height=440)
-frame3.place(x=420,y=275)
+frame3.place(x=420,y=305)
 # Prevent the frame from resizing to fit its children
 frame3.grid_propagate(False)
 # Frame for header
@@ -70,7 +81,7 @@ frame4.grid(column=0,row=1,columnspan=5,pady=5)
 frame4.grid_propagate(False)
 # Frame for result
 frame5 = tk.Frame(Application, highlightbackground="white", highlightthickness=1,background= "#7d7f9f",width=175, height=470)
-frame5.place(x=807,y=245)
+frame5.place(x=807,y=275)
 # Prevent the frame from resizing to fit its children
 frame5.grid_propagate(False)
 
@@ -120,14 +131,16 @@ Power_pack_values = ["11kW","22kW","30kW","37kW","45kW","55kW","75kW","90kW","11
 IU_size_values = ["120IU","200IU","310IU","430IU","600IU","900IU","1400IU","2350IU","i19","i27","i39","i59","i110","i200"]
 Material_selection = ["PVC","PP","GPPS","Low_Density_PE","RPVC","High_Density_PE","PC","PET"]
 No_of_cylinders=["1","2"]
-combobox_for_Power_pack = ttk.Combobox(frame1, values=Power_pack_values,width=10)
-combobox_for_IU_size = ttk.Combobox(frame1, values=IU_size_values,width=10)
-combobox_for_Materialselection = ttk.Combobox(frame1, values=Material_selection,width=12)
+combobox_for_Power_pack = ttk.Combobox(frame1, values=Power_pack_values,width=11)
+combobox_for_IU_size = ttk.Combobox(frame1, values=IU_size_values,width=11)
+combobox_for_Materialselection = ttk.Combobox(frame1, values=Material_selection,width=11)
 combobox_for_no_of_Cylinders = ttk.Combobox(frame2, values=No_of_cylinders,width=11)
 combobox_for_Power_pack.place(x=240, y=10)
 combobox_for_IU_size.place(x=240, y=40)
 combobox_for_Materialselection.place(x=850, y=40)
 combobox_for_no_of_Cylinders.place(x=200,y=20)
+combobox_for_screw_diameter=ttk.Combobox(frame1, values=[],width=11)
+combobox_for_screw_diameter.place(x=550, y=10)
 # Set default value 
 combobox_for_Power_pack.current(3)
 combobox_for_no_of_Cylinders.current(1)
@@ -140,9 +153,7 @@ combobox_for_Materialselection.bind("<<ComboboxSelected>>", combo_selction)
 combobox_for_no_of_Cylinders.bind("<<ComboboxSelected>>", combo_selction)
 # code to create spin box
 spinbox_for_injectionpressure=tk.Spinbox(frame1, from_=0, to=250, background="blue", fg="white",font=("calibre",10),width=10)
-spinbox_for_injectionpressure.place(x=550, y=40)   
-spinbox_for_screwdiameter=tk.Spinbox(frame1, from_=0, to=250,bg="blue", fg="white",font=("calibre",10),width=10)
-spinbox_for_screwdiameter.place(x=550, y=10)   
+spinbox_for_injectionpressure.place(x=550, y=40)      
 spinbox_for_hydromotorCC=tk.Spinbox(frame1, from_=0, to=250,bg="blue", fg="white",font=("calibre",10),width=10)
 spinbox_for_hydromotorCC.place(x=850, y=10)
 #spinbox inside frame2
@@ -173,22 +184,26 @@ units("sec").place(x=300, y=380)
 
 Title_lable = ttk.Label(frame4, text="IU SPECIFICATION CALCULATION SHEET",font=custom_font, foreground="black",background="#7d7f9f")
 Title_lable.place(x=300,y=5)
-Power_pack_lable = ttk.Label(frame1, text="SELECT THE MACHINE POWER PACK",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg") )
-Power_pack_lable.place(x=10, y=10)
-IU_SIZE_lable = ttk.Label(frame1, text="SELECT THE INJECTION UNIT SIZE",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg") )
-IU_SIZE_lable.place(x=10, y=40)
-Injectionpressure_lable = ttk.Label(frame1, text="ENTER INJECTION PRESSURE  [bar]",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg") )
-Injectionpressure_lable.place(x=330,y=40)
-Screwdiameter_lable = ttk.Label(frame1, text="ENTER SCREW DIAMETER [mm]",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg") )
-Screwdiameter_lable.place(x=330,y=10)
-hydromotorCC_lable = ttk.Label(frame1, text="ENTER THE HYDROMOTOR CC",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg") )
-hydromotorCC_lable.place(x=650,y=10)
-Screwdiameter_lable = ttk.Label(frame1, text="SELECT THE MATERIAL",font=custom_font_1, foreground="Ghostwhite", background=Application.cget("bg") )
-Screwdiameter_lable.place(x=650,y=40)
+Parameters_inside_frame1("SELECT THE MACHINE POWER PACK").place(x=10, y=10)
+Parameters_inside_frame1("SELECT THE INJECTION UNIT SIZE").place(x=10, y=40)
+Parameters_inside_frame1("ENTER INJECTION PRESSURE  [bar]").place(x=330,y=40)
+Parameters_inside_frame1("ENTER SCREW DIAMETER [mm]").place(x=330,y=10)
+Parameters_inside_frame1("ENTER THE HYDROMOTOR CC").place(x=650,y=10)
+Parameters_inside_frame1("SELECT THE MATERIAL").place(x=650,y=40)
+Parameters_inside_frame1("DOSING FLOW RATE [%]").place(x=10, y=70)
+Parameters_inside_frame1("INJECTION FLOW RATE [%]").place(x=330, y=70)
+Parameters_inside_frame1("SUCKBACK FLOW RATE [%]").place(x=650, y=70)
+Parameters_inside_frame1("PLASTICIZING CAPACITY [g/rev]").place(x=10, y=100)
+
+spinbox_inside_frame1("spinbox_for_dosign_flow_rate").place(x=240, y=70)
+spinbox_inside_frame1("spinbox_for_injection_flow_rate").place(x=550, y=70)
+spinbox_inside_frame1("spinbox_for_suckback_flow_rate").place(x=850, y=70)
+spinbox_inside_frame1("spinbox_for_plasticizing_capacity").place(x=240, y=100)
+
 Actuator_parameters_label = ttk.Label(Application, text="INJECTION CYLINDER PARAMETERS",font=custom_font_2, foreground="Magenta", background=Application.cget("bg") )
-Actuator_parameters_label.place(x=90,y=250)
+Actuator_parameters_label.place(x=90,y=275)
 IU_parameters_label = ttk.Label(Application, text="IU PARAMETERS",font=custom_font_2, foreground="Magenta", background=Application.cget("bg") )
-IU_parameters_label.place(x=540,y=250) 
+IU_parameters_label.place(x=540,y=275) 
 
 parameters_inside_frame2("NO OF CYLINDERS").place(x=20,y=20)
 parameters_inside_frame2("RATED FLOW").place(x=20,y=50)
@@ -197,56 +212,47 @@ parameters_inside_frame2("CAP SIDE AREA").place(x=20,y=110)
 parameters_inside_frame2("ROD SIDE DIAMETER").place(x=20,y=140)
 parameters_inside_frame2("ROD SIDE AREA").place(x=20,y=170)
 parameters_inside_frame2("AREA RATIO").place(x=20,y=200)
-parameters_inside_frame2("SUCKBACK STROKE").place(x=20,y=230)
+parameters_inside_frame2("INJECTION STROKE").place(x=20,y=230)
 parameters_inside_frame2("EXTENSION VELOCITY").place(x=20,y=260)
 parameters_inside_frame2("RETRACTION VELOCITY").place(x=20,y=290)
 parameters_inside_frame2("MELT CORRECTION FACTOR").place(x=20,y=320)
 parameters_inside_frame2("INJECTION TIME").place(x=20,y=350)
 parameters_inside_frame2("DOSING TIME").place(x=20,y=380)
 #label inside frame 3
-parameters_inside_frame3("DOSING FLOW RATE").place(x=10, y=20)
-parameters_inside_frame3("INJECTION FLOW RATE").place(x=10, y=50)
-parameters_inside_frame3("SUCKBACK FLOW RATE").place(x=10, y=80)
-parameters_inside_frame3("INJECTION VELOCITY").place(x=10, y=110)
-parameters_inside_frame3("SUCK BACK VELOCITY").place(x=10, y=140)
-parameters_inside_frame3("SCREW SPEED").place(x=10, y=170)
-parameters_inside_frame3("INJECTION RATE").place(x=10, y=200)
-parameters_inside_frame3("PLASTICIZING RATE").place(x=10, y=230)
-parameters_inside_frame3("SHOT WEIGHT").place(x=10, y=260)
-parameters_inside_frame3("SCREW PROJECTED AREA").place(x=10, y=290)
-parameters_inside_frame3("CYLINDER HEAD VOLUME").place(x=10, y=320)
-parameters_inside_frame3("INJECTION PRESSURE").place(x=10,y=350)
-parameters_inside_frame3("INJECTION POWER").place(x=10, y=380)
-parameters_inside_frame3("OVER LOAD FACTOR").place(x=10, y=410)
+parameters_inside_frame3("INJECTION VELOCITY").place(x=10, y=20)
+parameters_inside_frame3("SUCK BACK VELOCITY").place(x=10, y=50)
+parameters_inside_frame3("SCREW SPEED").place(x=10, y=80)
+parameters_inside_frame3("INJECTION RATE").place(x=10, y=110)
+parameters_inside_frame3("PLASTICIZING RATE").place(x=10, y=140)
+parameters_inside_frame3("SHOT WEIGHT").place(x=10, y=170)
+parameters_inside_frame3("SCREW PROJECTED AREA").place(x=10, y=200)
+parameters_inside_frame3("CYLINDER HEAD VOLUME").place(x=10, y=230)
+parameters_inside_frame3("INJECTION PRESSURE").place(x=10,y=260)
+parameters_inside_frame3("INJECTION POWER").place(x=10, y=290)
+parameters_inside_frame3("OVER LOAD FACTOR").place(x=10, y=320)
 #spinbox inside frame 3
-spinbox_inside_frame3("spinbox_for_dosign_flow_rate").place(x=200, y=20)
-spinbox_inside_frame3("spinbox_for_injection_flow_rate").place(x=200, y=50)
-spinbox_inside_frame3("spinbox_for_suckback_flow_rate").place(x=200, y=80)
-spinbox_inside_frame3("spinbox_for_injection_velocity").place(x=200, y=110)
-spinbox_inside_frame3("spinbox_for_suck_back_velocity").place(x=200, y=140)
-spinbox_inside_frame3("spinbox for screw speed").place(x=200, y=170)
-spinbox_inside_frame3("spinbox_for_injection_rate").place(x=200, y=200)
-spinbox_inside_frame3("spinbox_for_plasticizing_rate").place(x=200, y=230)
-spinbox_inside_frame3("spinbox_for_shot_weight").place(x=200, y=260)
-spinbox_inside_frame3("spinbox_for_screw_projeced_area").place(x=200, y=290)
-spinbox_inside_frame3("spinbox_for_cylinder_head_volume").place(x=200, y=320)
-spinbox_inside_frame3("Spinbox_for_injection_pressure").place(x=200,y=350)
-spinbox_inside_frame3("spinbox_for_injection_power").place(x=200, y=380)
-spinbox_inside_frame3("spinbox_for_overload_factor").place(x=200, y=410)
+spinbox_inside_frame3("spinbox_for_injection_velocity").place(x=200, y=20)
+spinbox_inside_frame3("spinbox_for_suck_back_velocity").place(x=200, y=50)
+spinbox_inside_frame3("spinbox for screw speed").place(x=200, y=80)
+spinbox_inside_frame3("spinbox_for_injection_rate").place(x=200, y=110)
+spinbox_inside_frame3("spinbox_for_plasticizing_rate").place(x=200, y=140)
+spinbox_inside_frame3("spinbox_for_shot_weight").place(x=200, y=170)
+spinbox_inside_frame3("spinbox_for_screw_projeced_area").place(x=200, y=200)
+spinbox_inside_frame3("spinbox_for_cylinder_head_volume").place(x=200, y=230)
+spinbox_inside_frame3("Spinbox_for_injection_pressure").place(x=200,y=260)
+spinbox_inside_frame3("spinbox_for_injection_power").place(x=200, y=290)
+spinbox_inside_frame3("spinbox_for_overload_factor").place(x=200, y=320)
 #units inside frame 3
-units_frame3("%").place(x=310,y=20)
-units_frame3("%").place(x=310,y=50)
-units_frame3("%").place(x=310,y=80)
-units_frame3("mm/s").place(x=310,y=110)
-units_frame3("mm/s").place(x=310,y=140)
-units_frame3("rpm").place(x=310,y=170)
-units_frame3("CC/s").place(x=310,y=200)
-units_frame3("gram/s").place(x=310,y=230)
-units_frame3("gram").place(x=310,y=260)
-units_frame3("mm\u00b2").place(x=310,y=290)
-units_frame3("mm\u00b3").place(x=310,y=320)
-units_frame3("bar").place(x=310,y=350)
-units_frame3("kW").place(x=310,y=380)
+units_frame3("mm/s").place(x=310,y=20)
+units_frame3("mm/s").place(x=310,y=50)
+units_frame3("rpm").place(x=310,y=80)
+units_frame3("CC/s").place(x=310,y=110)
+units_frame3("gram/s").place(x=310,y=140)
+units_frame3("gram").place(x=310,y=170)
+units_frame3("mm\u00b2").place(x=310,y=200)
+units_frame3("mm\u00b3").place(x=310,y=230)
+units_frame3("bar").place(x=310,y=260)
+units_frame3("kW").place(x=310,y=290)
 #sourse code
 #event calling function for power pack selection
 def flowrate_update (event):
@@ -277,7 +283,7 @@ def flowrate_update (event):
     # code to change the color and update the text
     style.configure("TCombobox2.TCombobox", fieldbackground="magenta", background="magenta")
     combobox_for_Power_pack.config(style="TCombobox2.TCombobox")
-    Power_pack_lable.config(text=f"{Power_pack} POWERPACK IS SELECTED")   
+    label_frame1["SELECT THE MACHINE POWER PACK"].config(text=f"{Power_pack} POWERPACK IS SELECTED")   
 combobox_for_Power_pack.bind("<<ComboboxSelected>>", flowrate_update)
 #event calling function for IU selection
 def IU_selection (event):
@@ -286,58 +292,76 @@ def IU_selection (event):
         Cylinder_Cap_Diameter = 115
         Cylinder_Rod_Diameter = 55
         Cylinder_Stroke_length = 125
+        screw_diameter_values = ['40', '45', '50']
     elif IU_size == "900IU":
         Cylinder_Cap_Diameter = 130  
         Cylinder_Rod_Diameter = 60
         Cylinder_Stroke_length = 225
+        screw_diameter_values = ['45', '50', '60']
     elif IU_size == "1400IU":
         Cylinder_Cap_Diameter = 150
         Cylinder_Rod_Diameter = 75
         Cylinder_Stroke_length = 290
+        screw_diameter_values = ['50', '60', '70']
     elif IU_size == "2350IU":
         Cylinder_Cap_Diameter =  180 
         Cylinder_Rod_Diameter = 80
         Cylinder_Stroke_length = 325
+        screw_diameter_values = ['60', '70', '80']
     elif IU_size == "430IU" :
         Cylinder_Cap_Diameter = 107.5  
         Cylinder_Rod_Diameter = 55
         Cylinder_Stroke_length = 203
+        screw_diameter_values = ['36', '40', '45']
     elif IU_size == "120IU" :
         Cylinder_Cap_Diameter = 70 
         Cylinder_Rod_Diameter = 40
         Cylinder_Stroke_length = 125
+        screw_diameter_values = ['22', '25', '28']
     elif IU_size == "200IU" :
         Cylinder_Cap_Diameter = 85 
         Cylinder_Rod_Diameter = 50
         Cylinder_Stroke_length = 150
+        screw_diameter_values = ['25', '28', '32']
     elif IU_size == "310IU" :
         Cylinder_Cap_Diameter = 95 
         Cylinder_Rod_Diameter = 50
         Cylinder_Stroke_length = 175
+        screw_diameter_values = ['32', '36', '40']
     elif IU_size == "i19" :
         Cylinder_Cap_Diameter = 160  
         Cylinder_Rod_Diameter = 70
         Cylinder_Stroke_length = 330
+        screw_diameter_values = ['50', '60', '70']
     elif IU_size == "i27" :
         Cylinder_Cap_Diameter = 180  
         Cylinder_Rod_Diameter = 80
         Cylinder_Stroke_length = 325
+        screw_diameter_values = ['60', '70', '80']
     elif IU_size == "i39" :
         Cylinder_Cap_Diameter = 210  
         Cylinder_Rod_Diameter = 90
         Cylinder_Stroke_length = 425
+        screw_diameter_values = ['70', '80', '90']
     elif IU_size == "i59" :
         Cylinder_Cap_Diameter = 250 
         Cylinder_Rod_Diameter = 110
         Cylinder_Stroke_length = 445
+        screw_diameter_values = ['80', '95', '105']
     elif IU_size == "i110" :
         Cylinder_Cap_Diameter = 290  
         Cylinder_Rod_Diameter = 125
         Cylinder_Stroke_length = 632
+        screw_diameter_values = ['105', '115', '125']
     elif IU_size == "i200" :
         Cylinder_Cap_Diameter = 400 
         Cylinder_Rod_Diameter = 220
         Cylinder_Stroke_length = 770
+        screw_diameter_values = ['105', '115', '125']
+    # Update screw diameter combobox with the new values
+    combobox_for_screw_diameter['values'] = screw_diameter_values
+    combobox_for_screw_diameter.set('')  # Clear current selection if any
+# Bind the IU size ComboBox to trigger the update when an IU size is selected
     spinboxes["spinbox_for_capdiameter"].delete(0, tk.END) 
     spinboxes["spinbox_for_capdiameter"].insert(0, Cylinder_Cap_Diameter)
     spinboxes["spinbox_for_roddiameter"].delete(0, tk.END)
@@ -346,8 +370,13 @@ def IU_selection (event):
     spinboxes["spinbox_for_suckbackstroke"].insert(0,Cylinder_Stroke_length)
     style.configure("TCombobox2.TCombobox", fieldbackground="magenta", background="magenta")
     combobox_for_IU_size.config(style="TCombobox2.TCombobox")
-    IU_SIZE_lable.config(text=f"{IU_size} IU IS SELECTED") 
+    label_frame1["SELECT THE INJECTION UNIT SIZE"].config(text=f"{IU_size} IU IS SELECTED") 
 combobox_for_IU_size.bind("<<ComboboxSelected>>",IU_selection)
+# event calling function for changing the color of screw diameter combobox
+def change_color(event):
+    style.configure("TCombobox2.TCombobox", fieldbackground="magenta", background="magenta")
+    combobox_for_screw_diameter.config(style="TCombobox2.TCombobox")
+combobox_for_screw_diameter.bind("<<ComboboxSelected>>",change_color)
 # event calling function for melt correction factor
 def Meltcorretion ():
     Material = combobox_for_Materialselection.get()
@@ -416,7 +445,7 @@ def Cylinder_parameters():
     Injection_velocity=Injection_flow_rate_in_mm_s/Cylinder_rod_side_area
     spinboxes["spinbox_for_injection_velocity"].delete(0,tk.END)
     spinboxes["spinbox_for_injection_velocity"].insert(0,round(Injection_velocity,2))
-    screw_diameter=float(spinbox_for_screwdiameter.get())
+    screw_diameter=float(combobox_for_screw_diameter.get())
     screw_projected_area=math.pi/4*screw_diameter**2
     spinboxes["spinbox_for_screw_projeced_area"].delete(0,tk.END)
     spinboxes["spinbox_for_screw_projeced_area"].insert(0,round(screw_projected_area,2))
@@ -434,7 +463,10 @@ def Cylinder_parameters():
     injection_time=cylinder_stroke_length/Injection_velocity
     spinboxes["spinbox_for_injection_time"].delete(0,tk.END)
     spinboxes["spinbox_for_injection_time"].insert(0,round(injection_time,2))
-    Plasticizing_rate=float(spinboxes["spinbox_for_plasticizing_rate"].get())
+    Plasticizig_capacity=float(spinboxes["spinbox_for_plasticizing_capacity"].get())
+    Plasticizing_rate=(Plasticizig_capacity*screw_speed)/60
+    spinboxes["spinbox_for_plasticizing_rate"].delete(0,tk.END)
+    spinboxes["spinbox_for_plasticizing_rate"].insert(0,round(Plasticizing_rate,2))
     Dosing_time=shot_weight/Plasticizing_rate
     spinboxes["spinbox_for_Dosing_time"].delete(0,tk.END)
     spinboxes["spinbox_for_Dosing_time"].insert(0,round(Dosing_time,2))
