@@ -230,6 +230,8 @@ parameters_inside_frame3("CYLINDER HEAD VOLUME").place(x=10, y=230)
 parameters_inside_frame3("INJECTION PRESSURE").place(x=10,y=260)
 parameters_inside_frame3("INJECTION POWER").place(x=10, y=290)
 parameters_inside_frame3("OVER LOAD FACTOR").place(x=10, y=320)
+parameters_inside_frame3("PERIPHERAL VELOCITY").place(x=10, y=350)
+
 #spinbox inside frame 3
 spinbox_inside_frame3("spinbox_for_injection_velocity").place(x=200, y=20)
 spinbox_inside_frame3("spinbox_for_suck_back_velocity").place(x=200, y=50)
@@ -242,6 +244,7 @@ spinbox_inside_frame3("spinbox_for_cylinder_head_volume").place(x=200, y=230)
 spinbox_inside_frame3("Spinbox_for_injection_pressure").place(x=200,y=260)
 spinbox_inside_frame3("spinbox_for_injection_power").place(x=200, y=290)
 spinbox_inside_frame3("spinbox_for_overload_factor").place(x=200, y=320)
+spinbox_inside_frame3("spinbox_for_peripheral_velocity").place(x=200, y=350)
 #units inside frame 3
 units_frame3("mm/s").place(x=310,y=20)
 units_frame3("mm/s").place(x=310,y=50)
@@ -253,6 +256,8 @@ units_frame3("mm\u00b2").place(x=310,y=200)
 units_frame3("mm\u00b3").place(x=310,y=230)
 units_frame3("bar").place(x=310,y=260)
 units_frame3("kW").place(x=310,y=290)
+units_frame3("rev/min").place(x=310,y=350)
+
 #sourse code
 #event calling function for power pack selection
 def flowrate_update (event):
@@ -482,6 +487,9 @@ def Cylinder_parameters():
     Overload_factor=(Injection_power/Replaced_power_pack)
     spinboxes["spinbox_for_overload_factor"].delete(0,tk.END)
     spinboxes["spinbox_for_overload_factor"].insert(0, round(Overload_factor,2))
+    Peripheral_velocity=(screw_diameter*math.pi*screw_speed)/1000
+    spinboxes["spinbox_for_peripheral_velocity"].delete(0,tk.END)
+    spinboxes["spinbox_for_peripheral_velocity"].insert(0, round(Peripheral_velocity,2))
 
 from PIL import ImageGrab
 from tkinter import messagebox
