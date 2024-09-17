@@ -15,7 +15,11 @@ def combo_selction(event):
         selected_combo.config(style="TCombobox2.TCombobox")
     elif selected_combo == combobox_for_no_of_Cylinders:
         style.configure("TCombobox2.TCombobox", fieldbackground="magenta", background="magenta")
-        selected_combo.config(style="TCombobox2.TCombobox")      
+        selected_combo.config(style="TCombobox2.TCombobox")
+    elif selected_combo == combobox_for_screw_diameter:
+        style.configure("TCombobox2.TCombobox", fieldbackground="magenta", background="magenta")
+        selected_combo.config(style="TCombobox2.TCombobox")
+         
 #function for units inside frame 2
 def units(num1):
     units_lable=ttk.Label(frame2, text=num1,font=custom_font_1,foreground="ghostwhite", background="dark blue")
@@ -142,7 +146,7 @@ combobox_for_no_of_Cylinders.place(x=200,y=20)
 combobox_for_screw_diameter=ttk.Combobox(frame1, values=[],width=11)
 combobox_for_screw_diameter.place(x=550, y=10)
 # Set default value 
-combobox_for_Power_pack.current(3)
+combobox_for_Power_pack.current(1)
 combobox_for_no_of_Cylinders.current(1)
 # Customize appearance
 style = ttk.Style()
@@ -151,6 +155,7 @@ combobox_for_Power_pack.bind("<<ComboboxSelected>>", combo_selction)
 combobox_for_IU_size.bind("<<ComboboxSelected>>", combo_selction)
 combobox_for_Materialselection.bind("<<ComboboxSelected>>", combo_selction)
 combobox_for_no_of_Cylinders.bind("<<ComboboxSelected>>", combo_selction)
+combobox_for_screw_diameter.bind("<<ComboboxSelected>>", combo_selction)
 # code to create spin box
 spinbox_for_injectionpressure=tk.Spinbox(frame1, from_=0, to=250, background="blue", fg="white",font=("calibre",10),width=10)
 spinbox_for_injectionpressure.place(x=550, y=40)      
@@ -256,7 +261,7 @@ units_frame3("mm\u00b2").place(x=310,y=200)
 units_frame3("mm\u00b3").place(x=310,y=230)
 units_frame3("bar").place(x=310,y=260)
 units_frame3("kW").place(x=310,y=290)
-units_frame3("rev/min").place(x=310,y=350)
+units_frame3("m/min").place(x=310,y=350)
 
 #sourse code
 #event calling function for power pack selection
@@ -377,11 +382,6 @@ def IU_selection (event):
     combobox_for_IU_size.config(style="TCombobox2.TCombobox")
     label_frame1["SELECT THE INJECTION UNIT SIZE"].config(text=f"{IU_size} IU IS SELECTED") 
 combobox_for_IU_size.bind("<<ComboboxSelected>>",IU_selection)
-# event calling function for changing the color of screw diameter combobox
-def change_color(event):
-    style.configure("TCombobox2.TCombobox", fieldbackground="magenta", background="magenta")
-    combobox_for_screw_diameter.config(style="TCombobox2.TCombobox")
-combobox_for_screw_diameter.bind("<<ComboboxSelected>>",change_color)
 # event calling function for melt correction factor
 def Meltcorretion ():
     Material = combobox_for_Materialselection.get()
@@ -490,7 +490,17 @@ def Cylinder_parameters():
     Peripheral_velocity=(screw_diameter*math.pi*screw_speed)/1000
     spinboxes["spinbox_for_peripheral_velocity"].delete(0,tk.END)
     spinboxes["spinbox_for_peripheral_velocity"].insert(0, round(Peripheral_velocity,2))
-
+    reference_pheripheral_velocity=40
+    if Peripheral_velocity < 40:
+        Note_for_peripheral_velocity = ttk.Label(frame3, text="Note : Pheripheral velocity is less than 40 m/min\n no need flow limitation",font=custom_font_1, foreground="yellow", background=Application.cget("bg") )
+        Note_for_peripheral_velocity.place(x=10,y=380)
+    else:
+        required_screw_speed=(screw_speed*reference_pheripheral_velocity)/Peripheral_velocity
+        required_flow=(Flow_rate*reference_pheripheral_velocity)/Peripheral_velocity
+        required_flow_percentage=((Flow_rate-required_flow)/Flow_rate)*100
+        required_flow_limitation=100-required_flow_percentage
+        Note_for_peripheral_velocity = ttk.Label(frame3, text=f"Note : Pheripheral velocity is greater than 40 m/min\n Flow limitation required\n Required screw speed = {round(required_screw_speed,2)} rpm Required flow = {round(required_flow_limitation,2)} LPM\n Required flow limitation={round(required_flow_limitation,2)} %",font=custom_font_1, foreground="yellow", background=Application.cget("bg") )
+        Note_for_peripheral_velocity.place(x=10,y=380)       
 from PIL import ImageGrab
 from tkinter import messagebox
 import tkinter as tk
