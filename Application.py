@@ -84,7 +84,7 @@ frame4.grid(column=0,row=1,columnspan=5,pady=5)
 # Prevent the frame from resizing to fit its children
 frame4.grid_propagate(False)
 # Frame for result
-frame5 = tk.Frame(Application, highlightbackground="white", highlightthickness=1,background= "#7d7f9f",width=175, height=470)
+frame5 = tk.Frame(Application, highlightbackground="white", highlightthickness=1,background= "#7d7f9f",width=175, height=505)
 frame5.place(x=807,y=275)
 # Prevent the frame from resizing to fit its children
 frame5.grid_propagate(False)
