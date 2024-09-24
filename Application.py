@@ -146,7 +146,6 @@ combobox_for_no_of_Cylinders.place(x=200,y=20)
 combobox_for_screw_diameter=ttk.Combobox(frame1, values=[],width=11)
 combobox_for_screw_diameter.place(x=550, y=10)
 # Set default value 
-combobox_for_Power_pack.current(1)
 combobox_for_no_of_Cylinders.current(1)
 # Customize appearance
 style = ttk.Style()
@@ -157,8 +156,10 @@ combobox_for_Materialselection.bind("<<ComboboxSelected>>", combo_selction)
 combobox_for_no_of_Cylinders.bind("<<ComboboxSelected>>", combo_selction)
 combobox_for_screw_diameter.bind("<<ComboboxSelected>>", combo_selction)
 # code to create spin box
-spinbox_for_injectionpressure=tk.Spinbox(frame1, from_=0, to=250, background="blue", fg="white",font=("calibre",10),width=10)
-spinbox_for_injectionpressure.place(x=550, y=40)      
+spinbox_for_systempressure=tk.Spinbox(frame1, from_=0, to=250, background="blue", fg="white",font=("calibre",10),width=10)
+spinbox_for_systempressure.place(x=550, y=40)    
+spinbox_for_systempressure.delete(0,"end")  
+spinbox_for_systempressure.insert(0, 190)
 spinbox_for_hydromotorCC=tk.Spinbox(frame1, from_=0, to=250,bg="blue", fg="white",font=("calibre",10),width=10)
 spinbox_for_hydromotorCC.place(x=850, y=10)
 #spinbox inside frame2
@@ -191,7 +192,7 @@ Title_lable = ttk.Label(frame4, text="IU SPECIFICATION CALCULATION SHEET",font=c
 Title_lable.place(x=300,y=5)
 Parameters_inside_frame1("SELECT THE MACHINE POWER PACK").place(x=10, y=10)
 Parameters_inside_frame1("SELECT THE INJECTION UNIT SIZE").place(x=10, y=40)
-Parameters_inside_frame1("ENTER INJECTION PRESSURE  [bar]").place(x=330,y=40)
+Parameters_inside_frame1("ENTER SYSTEM PRESSURE  [bar]").place(x=330,y=40)
 Parameters_inside_frame1("ENTER SCREW DIAMETER [mm]").place(x=330,y=10)
 Parameters_inside_frame1("ENTER THE HYDROMOTOR CC").place(x=650,y=10)
 Parameters_inside_frame1("SELECT THE MATERIAL").place(x=650,y=40)
@@ -199,12 +200,16 @@ Parameters_inside_frame1("DOSING FLOW RATE [%]").place(x=10, y=70)
 Parameters_inside_frame1("INJECTION FLOW RATE [%]").place(x=330, y=70)
 Parameters_inside_frame1("SUCKBACK FLOW RATE [%]").place(x=650, y=70)
 Parameters_inside_frame1("PLASTICIZING CAPACITY [g/rev]").place(x=10, y=100)
-
 spinbox_inside_frame1("spinbox_for_dosign_flow_rate").place(x=240, y=70)
 spinbox_inside_frame1("spinbox_for_injection_flow_rate").place(x=550, y=70)
 spinbox_inside_frame1("spinbox_for_suckback_flow_rate").place(x=850, y=70)
 spinbox_inside_frame1("spinbox_for_plasticizing_capacity").place(x=240, y=100)
-
+spinboxes["spinbox_for_dosign_flow_rate"].delete(0, "end")
+spinboxes["spinbox_for_dosign_flow_rate"].insert(0, 100)
+spinboxes["spinbox_for_injection_flow_rate"].delete(0, "end")
+spinboxes["spinbox_for_injection_flow_rate"].insert(0, 100)
+spinboxes["spinbox_for_suckback_flow_rate"].delete(0, "end")
+spinboxes["spinbox_for_suckback_flow_rate"].insert(0, 40)
 Actuator_parameters_label = ttk.Label(Application, text="INJECTION CYLINDER PARAMETERS",font=custom_font_2, foreground="Magenta", background=Application.cget("bg") )
 Actuator_parameters_label.place(x=90,y=275)
 IU_parameters_label = ttk.Label(Application, text="IU PARAMETERS",font=custom_font_2, foreground="Magenta", background=Application.cget("bg") )
@@ -408,8 +413,8 @@ def Meltcorretion ():
 combobox_for_Materialselection.bind("<<ComboboxSelected>>", lambda event: Meltcorretion())
 import math 
 def Cylinder_parameters():
-    Cylinder_Cap_Diameter=int(spinboxes["spinbox_for_capdiameter"].get())
-    Cylinder_Rod_Diameter=int(spinboxes["spinbox_for_roddiameter"].get())
+    Cylinder_Cap_Diameter=float(spinboxes["spinbox_for_capdiameter"].get())
+    Cylinder_Rod_Diameter=float(spinboxes["spinbox_for_roddiameter"].get())
     no_of_cylinders=int(combobox_for_no_of_Cylinders.get())
     Cylinder_cap_side_area = (math.pi/4*Cylinder_Cap_Diameter**2)*no_of_cylinders
     Cylinder_rod_side_area = (math.pi/4*((Cylinder_Cap_Diameter)**2-(Cylinder_Rod_Diameter)**2))*no_of_cylinders
@@ -468,14 +473,7 @@ def Cylinder_parameters():
     injection_time=cylinder_stroke_length/Injection_velocity
     spinboxes["spinbox_for_injection_time"].delete(0,tk.END)
     spinboxes["spinbox_for_injection_time"].insert(0,round(injection_time,2))
-    Plasticizig_capacity=float(spinboxes["spinbox_for_plasticizing_capacity"].get())
-    Plasticizing_rate=(Plasticizig_capacity*screw_speed)/60
-    spinboxes["spinbox_for_plasticizing_rate"].delete(0,tk.END)
-    spinboxes["spinbox_for_plasticizing_rate"].insert(0,round(Plasticizing_rate,2))
-    Dosing_time=shot_weight/Plasticizing_rate
-    spinboxes["spinbox_for_Dosing_time"].delete(0,tk.END)
-    spinboxes["spinbox_for_Dosing_time"].insert(0,round(Dosing_time,2))
-    Hydraulic_pressure=float(spinbox_for_injectionpressure.get())
+    Hydraulic_pressure=float(spinbox_for_systempressure.get())
     Injection_pressure=(Hydraulic_pressure*Cylinder_rod_side_area)/screw_projected_area
     spinboxes["Spinbox_for_injection_pressure"].delete(0,tk.END)
     spinboxes["Spinbox_for_injection_pressure"].insert(0,round(Injection_pressure, 2))
@@ -500,7 +498,14 @@ def Cylinder_parameters():
         required_flow_percentage=((Flow_rate-required_flow)/Flow_rate)*100
         required_flow_limitation=100-required_flow_percentage
         Note_for_peripheral_velocity = ttk.Label(frame3, text=f"Note : Pheripheral velocity is greater than 40 m/min\n Flow limitation required\n Required screw speed = {round(required_screw_speed,2)} rpm Required flow = {round(required_flow_limitation,2)} LPM\n Required flow limitation={round(required_flow_limitation,2)} %",font=custom_font_1, foreground="yellow", background=Application.cget("bg") )
-        Note_for_peripheral_velocity.place(x=10,y=380)       
+        Note_for_peripheral_velocity.place(x=10,y=380)  
+    Plasticizig_capacity=float(spinboxes["spinbox_for_plasticizing_capacity"].get())
+    Plasticizing_rate=(Plasticizig_capacity*screw_speed)/60
+    spinboxes["spinbox_for_plasticizing_rate"].delete(0,tk.END)
+    spinboxes["spinbox_for_plasticizing_rate"].insert(0,round(Plasticizing_rate,2))
+    Dosing_time=shot_weight/Plasticizing_rate
+    spinboxes["spinbox_for_Dosing_time"].delete(0,tk.END)
+    spinboxes["spinbox_for_Dosing_time"].insert(0,round(Dosing_time,2))     
 from PIL import ImageGrab
 from tkinter import messagebox
 import tkinter as tk
