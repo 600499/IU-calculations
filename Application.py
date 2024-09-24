@@ -69,12 +69,12 @@ frame1.grid(row=2, column=0, padx=20, pady=0, columnspan=3)
 # Prevent the frame from resizing to fit its children
 frame1.grid_propagate(False)
 # Frame for cylinder calculations
-frame2 = tk.Frame(Application, highlightbackground="white", highlightthickness=1,background= "dark blue",width=380, height=440)
+frame2 = tk.Frame(Application, highlightbackground="white", highlightthickness=1,background= "dark blue",width=380, height=475)
 frame2.place(x=20,y=305)
 # Prevent the frame from resizing to fit its children
 frame2.grid_propagate(False)
 # Frame for injection unit parameters
-frame3 = tk.Frame(Application, highlightbackground="white", highlightthickness=1,background= "dark blue",width=380, height=440)
+frame3 = tk.Frame(Application, highlightbackground="white", highlightthickness=1,background= "dark blue",width=380, height=475)
 frame3.place(x=420,y=305)
 # Prevent the frame from resizing to fit its children
 frame3.grid_propagate(False)
@@ -372,7 +372,7 @@ def IU_selection (event):
         Cylinder_Cap_Diameter = 400 
         Cylinder_Rod_Diameter = 220
         Cylinder_Stroke_length = 770
-        screw_diameter_values = ['105', '115', '125']
+        screw_diameter_values = ['125', '140', '160']
     # Update screw diameter combobox with the new values
     combobox_for_screw_diameter['values'] = screw_diameter_values
     combobox_for_screw_diameter.set('')  # Clear current selection if any
@@ -490,14 +490,13 @@ def Cylinder_parameters():
     spinboxes["spinbox_for_peripheral_velocity"].insert(0, round(Peripheral_velocity,2))
     reference_pheripheral_velocity=40
     if Peripheral_velocity < 40:
-        Note_for_peripheral_velocity = ttk.Label(frame3, text="Note : Pheripheral velocity is less than 40 m/min\n no need flow limitation",font=custom_font_1, foreground="yellow", background=Application.cget("bg") )
+        Note_for_peripheral_velocity = ttk.Label(frame3, text="Note : Pheripheral velocity is less than 40 m/min        \nNo need flow limitation\n \n \n ",font=custom_font_1, foreground="yellow", background=Application.cget("bg") )
         Note_for_peripheral_velocity.place(x=10,y=380)
     else:
         required_screw_speed=(screw_speed*reference_pheripheral_velocity)/Peripheral_velocity
         required_flow=(Flow_rate*reference_pheripheral_velocity)/Peripheral_velocity
-        required_flow_percentage=((Flow_rate-required_flow)/Flow_rate)*100
-        required_flow_limitation=100-required_flow_percentage
-        Note_for_peripheral_velocity = ttk.Label(frame3, text=f"Note : Pheripheral velocity is greater than 40 m/min\n Flow limitation required\n Required screw speed = {round(required_screw_speed,2)} rpm Required flow = {round(required_flow_limitation,2)} LPM\n Required flow limitation={round(required_flow_limitation,2)} %",font=custom_font_1, foreground="yellow", background=Application.cget("bg") )
+        required_flow_limitation=((Flow_rate-required_flow)/Flow_rate)*100
+        Note_for_peripheral_velocity = ttk.Label(frame3, text=f"Note : Pheripheral velocity is greater than 40 m/min\nFlow limitation required\nRequired screw speed = {round(required_screw_speed,2)} rpm \nRequired flow = {round(required_flow,2)} LPM\nRequired flow limitation={round(required_flow_limitation,2)} %",font=custom_font_1, foreground="yellow", background=Application.cget("bg") )
         Note_for_peripheral_velocity.place(x=10,y=380)  
     Plasticizig_capacity=float(spinboxes["spinbox_for_plasticizing_capacity"].get())
     Plasticizing_rate=(Plasticizig_capacity*screw_speed)/60
